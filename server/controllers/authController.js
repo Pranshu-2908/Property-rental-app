@@ -40,6 +40,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
+    role: req.body.role,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   });
@@ -48,7 +49,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   // 1) Check if email and password exist
   if (!email || !password) {
@@ -60,19 +61,42 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
+  // 3) Check if role is correct
+  if (!role) {
+    return next(new AppError('Please provide a role!', 400));
+  }
+  if (user.role !== role) {
+    return next(new AppError('Incorrect role for this email', 401));
+  }
 
-  // 3) If everything ok, send token to client
+  // 4) If everything ok, send token to client
   createSendToken(user, 200, res);
 });
 
+exports.logout = catchAsync(async (req, res, next) => {
+  res.cookie('jwt', '', {
+    expires: new Date(0), // Instantly expires cookie
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // Works only over HTTPS
+    sameSite: 'None' // Required for cross-origin requests
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Logged out successfully!'
+  });
+});
+
 exports.protect = catchAsync(async (req, res, next) => {
-  // 1) Getting token and check of it's there
+  // 1) Getting token and checking if it's there
   let token;
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -81,17 +105,14 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  // 2) Verification token
+  // 2) Verify token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
     return next(
-      new AppError(
-        'The user belonging to this token does no longer exist.',
-        401
-      )
+      new AppError('The user belonging to this token no longer exists.', 401)
     );
   }
 
@@ -101,8 +122,6 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('User recently changed password! Please log in again.', 401)
     );
   }
-
-  // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
   next();
 });
