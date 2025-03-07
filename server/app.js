@@ -1,14 +1,17 @@
 const express = require('express');
 const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
-const mongoSanitize = require('express-mongo-sanitize');
+// const rateLimit = require('express-rate-limit');
+// const helmet = require('helmet');
+// const mongoSanitize = require('express-mongo-sanitize');
 // const xss = require("xss-clean");
 // const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const userRouter = require('./routes/userRoutes');
+const propertyRouter = require('./routes/propertyRoutes');
+const tenancyRouter = require('./routes/tenancyRoutes');
+const maintenanceRouter = require('./routes/maintenanceRoutes');
 
 const app = express();
 
@@ -25,6 +28,9 @@ app.use(express.static(`${__dirname}/public`));
 
 // 3) ROUTES
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/property', propertyRouter);
+app.use('/api/v1/tenancy', tenancyRouter);
+app.use('/api/v1/maintenance', maintenanceRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

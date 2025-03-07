@@ -1,21 +1,17 @@
 const mongoose = require('mongoose');
 
 const maintenanceSchema = new mongoose.Schema({
-  propertyId: {
+  property: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Property',
     required: true
   },
-  tenantId: {
+  tenant: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Tenant',
     required: true
   },
-  requestDate: {
-    type: Date,
-    default: Date.now,
-    required: true
-  },
+
   description: {
     type: String,
     required: true
@@ -25,8 +21,9 @@ const maintenanceSchema = new mongoose.Schema({
     enum: ['Pending', 'In Progress', 'Completed'],
     default: 'Pending'
   },
-  completionDate: {
-    type: Date
+  requestDate: {
+    type: Date,
+    default: Date.now
   }
 });
 

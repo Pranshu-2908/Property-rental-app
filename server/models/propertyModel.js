@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const propertySchema = new mongoose.Schema({
-  landlordId: {
+  landlord: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  tenantId: {
+  tenant: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
@@ -23,32 +23,36 @@ const propertySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  // location: {
+  //   address: {
+  //     type: String,
+  //     required: true,
+  //     trim: true
+  //   },
+  //   city: {
+  //     type: String,
+  //     required: true,
+  //     trim: true
+  //   },
+  //   state: {
+  //     type: String,
+  //     required: true,
+  //     trim: true
+  //   },
+  //   zipcode: {
+  //     type: String,
+  //     required: true,
+  //     trim: true
+  //   }
+  // },
   location: {
-    address: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    city: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    state: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    zipcode: {
-      type: String,
-      required: true,
-      trim: true
-    }
+    type: String,
+    required: true
   },
   tenantsPrefferd: {
     type: String,
     enum: ['Students', 'Bachelors', 'Co-living', 'Family'],
-    default: 'Students'
+    requird: 'true'
   },
   available: {
     type: Boolean,
@@ -57,7 +61,8 @@ const propertySchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  images: [String]
 });
 
 const Property = mongoose.model('Property', propertySchema);
