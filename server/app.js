@@ -12,6 +12,7 @@ const userRouter = require('./routes/userRoutes');
 const propertyRouter = require('./routes/propertyRoutes');
 const tenancyRouter = require('./routes/tenancyRoutes');
 const maintenanceRouter = require('./routes/maintenanceRoutes');
+const paymentRouter = require('./routes/paymentRoutes');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/property', propertyRouter);
 app.use('/api/v1/tenancy', tenancyRouter);
 app.use('/api/v1/maintenance', maintenanceRouter);
+app.use('/api/v1/payment', paymentRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

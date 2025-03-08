@@ -1,83 +1,66 @@
 const Maintenance = require('../models/maintenanceModel');
 const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
 // 1) Create a Maintenance Request (Tenant Only)
-exports.createMaintenanceRequest = async (req, res, next) => {
-  try {
-    const { property, description } = req.body;
+exports.createMaintenanceRequest = catchAsync(async (req, res, next) => {
+  const { property, description } = req.body;
 
-    const newRequest = await Maintenance.create({
-      property,
-      tenant: req.user.id,
-      description
-    });
+  const newRequest = await Maintenance.create({
+    property,
+    tenant: req.user.id,
+    description
+  });
 
-    res.status(201).json({
-      status: 'success',
-      data: newRequest
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  res.status(201).json({
+    status: 'success',
+    data: newRequest
+  });
+});
 
 // 2) Get All Maintenance Requests (Landlord/Admin)
-exports.getAllMaintenanceRequests = async (req, res, next) => {
-  try {
-    const requests = await Maintenance.find().populate(
-      'property tenant',
-      'name email'
-    );
-    res.status(200).json({
-      status: 'success',
-      data: requests
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+exports.getAllMaintenanceRequests = catchAsync(async (req, res, next) => {
+  const requests = await Maintenance.find()
+    .populate('tenant', 'name email')
+    .populate('property', 'title');
+  res.status(200).json({
+    status: 'success',
+    data: { requests }
+  });
+});
 
 // 📌 Get Single Maintenance Request (Tenant or Landlord)
-exports.getMaintenanceRequest = async (req, res, next) => {
-  try {
-    const request = await Maintenance.findById(req.params.id).populate(
-      'property tenant',
-      'name email'
-    );
+exports.getMaintenanceRequest = catchAsync(async (req, res, next) => {
+  const request = await Maintenance.findById(req.params.id)
+    .populate('tenant', 'name email')
+    .populate('property', 'title');
 
-    if (!request) {
-      return next(new AppError('Maintenance request not found', 404));
-    }
-
-    res.status(200).json({
-      status: 'success',
-      data: request
-    });
-  } catch (error) {
-    next(error);
+  if (!request) {
+    return next(new AppError('Maintenance request not found', 404));
   }
-};
+
+  res.status(200).json({
+    status: 'success',
+    data: request
+  });
+});
 
 // 📌 Update Maintenance Request (Landlord Only)
-exports.updateMaintenanceRequest = async (req, res, next) => {
-  try {
-    const { status, assignedVendor } = req.body;
+exports.updateMaintenanceRequest = catchAsync(async (req, res, next) => {
+  const { status } = req.body;
 
-    const updatedRequest = await Maintenance.findByIdAndUpdate(
-      req.params.id,
-      { status, assignedVendor },
-      { new: true, runValidators: true }
-    );
+  const updatedRequest = await Maintenance.findByIdAndUpdate(
+    req.params.id,
+    { status },
+    { new: true, runValidators: true }
+  );
 
-    if (!updatedRequest) {
-      return next(new AppError('Maintenance request not found', 404));
-    }
-
-    res.status(200).json({
-      status: 'success',
-      data: updatedRequest
-    });
-  } catch (error) {
-    next(error);
+  if (!updatedRequest) {
+    return next(new AppError('Maintenance request not found', 404));
   }
-};
+
+  res.status(200).json({
+    status: 'success',
+    data: { updatedRequest }
+  });
+});

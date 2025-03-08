@@ -25,7 +25,7 @@ router
   )
   .delete(
     authController.protect,
-    authController.restrictTo('admin'),
+    authController.restrictTo('landlord', 'admin'),
     propertyController.deleteProperty
   );
 

@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-  tenantId: {
+  tenant: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  landlordId: {
+  landlord: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  propertyId: {
+  property: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Property',
     required: true
@@ -27,7 +27,7 @@ const paymentSchema = new mongoose.Schema({
   paymentMethod: {
     type: String,
     enum: ['Credit Card', 'Debit Card', 'PayPal', 'Bank Transfer'],
-    required: true
+    default: 'Credit Card'
   },
   status: {
     type: String,

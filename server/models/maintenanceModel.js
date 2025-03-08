@@ -8,7 +8,7 @@ const maintenanceSchema = new mongoose.Schema({
   },
   tenant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Tenant',
+    ref: 'User',
     required: true
   },
 
