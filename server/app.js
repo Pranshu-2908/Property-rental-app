@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 // const rateLimit = require('express-rate-limit');
 // const helmet = require('helmet');
 // const mongoSanitize = require('express-mongo-sanitize');
@@ -17,6 +18,12 @@ const paymentRouter = require('./routes/paymentRoutes');
 const app = express();
 
 // 1) GLOBAL MIDDLEWARES
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true // Allow cookies and authorization headers
+  })
+);
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {

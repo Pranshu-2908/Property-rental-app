@@ -3,8 +3,11 @@ import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RadioGroup } from "../ui/radio-group";
+import axios from "axios";
+import { USER_API_END_POINT } from "../../utils/contains";
+import { toast } from "sonner";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -12,51 +15,40 @@ const Login = () => {
     role: "",
     password: "",
   });
-
+  const navigate = useNavigate();
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (res.data.status == "success") {
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-between max-w-7xl mx-auto mt-20">
-        <div>
-          <h4 className="font-bold text-3xl mb-5">
-            Things you can do <br />
-            with DreamHouse
-          </h4>
-          <ul className="ml-5 text-muted-foreground list-disc">
-            <li className="text-lg mb-2">Post one Single Property for FREE</li>
-            <li className="text-lg mb-2">
-              Set property alerts for your requirement
-            </li>
-            <li className="text-lg mb-2">Get accessed by over 1 Lakh buyers</li>
-            <li className="text-lg mb-2">
-              Showcase your property as Rental, PG or for Sale
-            </li>
-            <li className="text-lg mb-2">
-              Get instant queries over Phone, Email and SMS
-            </li>
-            <li className="text-lg mb-2">
-              Performance in search & Track responses & views online
-            </li>
-            <li className="text-lg mb-2">
-              Add detailed property information & multiple photos per listing
-            </li>
-          </ul>
-        </div>
+      <div className="flex items-center justify-center max-w-7xl mx-auto mt-20">
         <form
           onSubmit={submitHandler}
-          className="bg-slate-200 w-1/2 border border-gray-300 rounded-2xl p-4 my-10 backdrop-blur-md"
+          className=" w-1/3 border border-gray-200 rounded-2xl p-4 my-10 backdrop-blur-md"
         >
           <h1 className="text-3xl font-bold mb-5">Login</h1>
           <div className="my-5">
-            <Label className="text-lg mb-5">Signup as</Label>
+            <Label className="text-lg mb-5">Login as</Label>
             <RadioGroup
               defaultValue="tenant"
               className="flex gap-2 justify-start ml-5"
@@ -104,21 +96,17 @@ const Login = () => {
               onChange={changeEventHandler}
             />
           </div>
-          <div className="">
-            <Button className="cursor-pointer" variant="link">
-              Clear
-            </Button>
 
-            <Button
-              type="submit"
-              className="cursor-pointer bg-slate-600 hover:bg-slate-800"
-            >
-              Submit
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            className="cursor-pointer bg-slate-900 hover:bg-slate-600 w-full"
+          >
+            Submit
+          </Button>
+
           <span className="mt-10 flex gap-2 justify-center">
             New to DreamHomes?
-            <Link className="text-slate-800 hover:text-slate-950" to="/signup">
+            <Link className="text-slate-600 hover:text-blue-600" to="/signup">
               Regiser here
             </Link>
           </span>

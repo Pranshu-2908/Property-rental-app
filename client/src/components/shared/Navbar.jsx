@@ -12,13 +12,15 @@ const Navbar = () => {
       <div className="flex items-center justify-between ml-30 mr-15 max-w-full h-16 ">
         <div>
           <h1 className="text-5xl font-bold">
-            Dream<span className="text-amber-300">Homes</span>
+            Dream<span className="text-red-600">Homes</span>
           </h1>
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex text-2xl items-center gap-15">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" className="hover:text-violet-700">
+                Home
+              </Link>
             </li>
             <li>
               <Link>Explore Properties</Link>
@@ -32,7 +34,7 @@ const Navbar = () => {
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button className="bg-slate-700 hover:bg-slate-900 text-white text-sm">
+                <Button className="bg-violet-700 hover:bg-slate-900 text-white text-sm">
                   Signup
                 </Button>
               </Link>
