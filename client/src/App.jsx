@@ -1,9 +1,8 @@
-import React from "react";
-import Navbar from "./components/shared/Navbar";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Home from "./components/Home";
+import Property from "./components/Property";
 
 const appRouter = createBrowserRouter([
   {
@@ -17,6 +16,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/property",
+    element: <Property />,
   },
 ]);
 

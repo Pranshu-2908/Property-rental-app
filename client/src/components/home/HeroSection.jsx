@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 
 const HeroSection = () => {
   return (
-    <div className="text-center pt-10">
+    <div className="text-center pt-10 ">
       <div className="flex flex-col gap-10 my-10">
         <span className="mx-auto px-4 py-2 rounded-full bg-slate-100 text-red-600">
           No. 1 Property Rental Management System
@@ -22,7 +22,7 @@ const HeroSection = () => {
             placeholder="Find your Dream House"
             className="outline-none border-none w-full"
           />
-          <Button className="rounded-r-full bg-purple-800">
+          <Button className="rounded-r-full bg-purple-800 cursor-pointer">
             <Search className="h-10 w-5" />
           </Button>
         </div>

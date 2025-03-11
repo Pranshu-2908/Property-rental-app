@@ -23,18 +23,20 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link>Explore Properties</Link>
+              <Link to="/property" className="hover:text-violet-700">
+                Explore Properties
+              </Link>
             </li>
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
               <Link to="/login">
-                <Button variant="outline" className="text-lg">
+                <Button variant="outline" className="text-lg cursor-pointer">
                   Login
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button className="bg-purple-800 hover:bg-slate-900 text-white text-sm">
+                <Button className="bg-purple-800 hover:bg-slate-900 text-white text-sm cursor-pointer">
                   Signup
                 </Button>
               </Link>

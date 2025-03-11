@@ -6,11 +6,13 @@ import Footer from "./home/Footer";
 
 const Home = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <HeroSection />
-      <CategoryCarousel />
-      <StatsDisplay />
+      <main className="flex-grow ">
+        <HeroSection />
+        <CategoryCarousel />
+        <StatsDisplay />
+      </main>
       <Footer />
     </div>
   );

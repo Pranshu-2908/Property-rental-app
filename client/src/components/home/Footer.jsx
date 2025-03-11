@@ -2,12 +2,12 @@ import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-purple-700 text-white pt-2">
+    <footer className="text-black pt-2 border-t-2 border-slate-800">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
         {/* Left Side - Company Info */}
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h2 className="text-xl font-semibold">DreamHomes</h2>
-          <p className="text-sm text-white">
+          <p className="text-sm text-black">
             Find your perfect rental home with ease.
           </p>
         </div>
