@@ -52,14 +52,14 @@ const Signup = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto mt-20">
+      <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
           onSubmit={submitHandler}
           className=" w-1/3 border border-gray-300 rounded-2xl p-4 my-10 backdrop-blur-md"
         >
           <h1 className="text-3xl font-bold mb-5">Sign Up</h1>
           <div className="my-5">
-            <Label className="text-lg mb-5">Signup as</Label>
+            <Label className="text-lg">Signup as</Label>
             <RadioGroup
               defaultValue="tenant"
               className="flex gap-2 justify-start ml-5"
@@ -138,7 +138,7 @@ const Signup = () => {
               Submit
             </Button>
           )}
-          <span className="mt-10 flex gap-2 justify-center">
+          <span className="mt-5 flex gap-2 justify-center">
             Already registered?
             <Link className="text-slate-600 hover:text-blue-600" to="/login">
               Login

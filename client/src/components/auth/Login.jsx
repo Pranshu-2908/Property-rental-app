@@ -50,14 +50,14 @@ const Login = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto mt-20">
+      <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
           onSubmit={submitHandler}
           className=" w-1/3 border border-gray-200 rounded-2xl p-4 my-10 backdrop-blur-md"
         >
           <h1 className="text-3xl font-bold mb-5">Login</h1>
           <div className="my-5">
-            <Label className="text-lg mb-5">Login as</Label>
+            <Label className="text-lg">Login as</Label>
             <RadioGroup
               defaultValue="tenant"
               className="flex gap-2 justify-start ml-5"
@@ -119,7 +119,7 @@ const Login = () => {
             </Button>
           )}
 
-          <span className="mt-10 flex gap-2 justify-center">
+          <span className="mt-5 flex gap-2 justify-center">
             New to DreamHomes?
             <Link className="text-slate-600 hover:text-blue-600" to="/signup">
               Regiser here

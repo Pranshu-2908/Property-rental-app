@@ -31,32 +31,34 @@ const StatsDisplay = () => {
   }
 
   return (
-    <div className="mt-10 w-[60%] mx-auto">
-      <div className="mt-5">
-        <span className="text-2xl ">Popular Owner Properties</span>
-      </div>
-      <Separator className="mb-5 bg-slate-600 shadow-2xl " />
-      <div className="flex h-5 items-center space-x-4 text-lg mb-5">
-        <TabButton
-          isSelected={selectedTopic === "statistics"}
-          onSelect={() => handleSelect("statistics")}
-        >
-          Statistics
-        </TabButton>
-        <Separator orientation="vertical" className="bg-slate-600" />
-        <TabButton
-          isSelected={selectedTopic === "properties"}
-          onSelect={() => handleSelect("properties")}
-        >
-          Properties
-        </TabButton>
-        <Separator orientation="vertical" className="bg-slate-600" />
-        <TabButton
-          isSelected={selectedTopic === "services"}
-          onSelect={() => handleSelect("services")}
-        >
-          Services
-        </TabButton>
+    <div className="my-10">
+      <div className="w-[70%] mx-auto">
+        <div className="mt-5 ">
+          <span className="text-2xl ">Popular Owner Properties</span>
+        </div>
+        <Separator className="mb-5 bg-slate-600 shadow-2xl " />
+        <div className="flex h-5 items-center space-x-4 text-lg mb-5">
+          <TabButton
+            isSelected={selectedTopic === "statistics"}
+            onSelect={() => handleSelect("statistics")}
+          >
+            Statistics
+          </TabButton>
+          <Separator orientation="vertical" className="bg-slate-600" />
+          <TabButton
+            isSelected={selectedTopic === "properties"}
+            onSelect={() => handleSelect("properties")}
+          >
+            Properties
+          </TabButton>
+          <Separator orientation="vertical" className="bg-slate-600" />
+          <TabButton
+            isSelected={selectedTopic === "services"}
+            onSelect={() => handleSelect("services")}
+          >
+            Services
+          </TabButton>
+        </div>
       </div>
       {selectedTopic === "statistics" && (
         <div>
