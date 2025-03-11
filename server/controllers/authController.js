@@ -45,7 +45,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   });
-
   createSendToken(newUser, 201, 'registered and logged in succesfully', res);
 });
 

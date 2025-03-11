@@ -8,6 +8,9 @@ import { RadioGroup } from "../ui/radio-group";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/contains";
 import { toast } from "sonner";
+import { setLoading } from "../../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2 } from "lucide-react";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -17,7 +20,9 @@ const Signup = () => {
     password: "",
     passwordConfirm: "",
   });
+  const { loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -25,6 +30,7 @@ const Signup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/signup`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -38,6 +44,8 @@ const Signup = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -117,12 +125,19 @@ const Signup = () => {
               onChange={changeEventHandler}
             />
           </div>
-          <Button
-            type="submit"
-            className="cursor-pointer bg-slate-900 hover:bg-slate-600 w-full"
-          >
-            Submit
-          </Button>
+          {loading ? (
+            <Button className="w-full">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              signing in...
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="cursor-pointer bg-slate-900 hover:bg-slate-600 w-full"
+            >
+              Submit
+            </Button>
+          )}
           <span className="mt-10 flex gap-2 justify-center">
             Already registered?
             <Link className="text-slate-600 hover:text-blue-600" to="/login">

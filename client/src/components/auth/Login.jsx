@@ -8,6 +8,9 @@ import { RadioGroup } from "../ui/radio-group";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/contains";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../../redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -15,7 +18,10 @@ const Login = () => {
     role: "",
     password: "",
   });
+
+  const { loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -23,6 +29,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -36,6 +43,8 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   return (
@@ -96,13 +105,19 @@ const Login = () => {
               onChange={changeEventHandler}
             />
           </div>
-
-          <Button
-            type="submit"
-            className="cursor-pointer bg-slate-900 hover:bg-slate-600 w-full"
-          >
-            Submit
-          </Button>
+          {loading ? (
+            <Button className="w-full">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              loging in...
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="cursor-pointer bg-slate-900 hover:bg-slate-600 w-full"
+            >
+              Submit
+            </Button>
+          )}
 
           <span className="mt-10 flex gap-2 justify-center">
             New to DreamHomes?

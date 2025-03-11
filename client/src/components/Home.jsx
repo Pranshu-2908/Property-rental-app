@@ -1,11 +1,17 @@
-import React from "react";
+import HeroSection from "./home/HeroSection";
 import Navbar from "./shared/Navbar";
+import CategoryCarousel from "./home/CategoryCarousel";
+import StatsDisplay from "./home/StatsDisplay";
+import Footer from "./home/Footer";
 
 const Home = () => {
   return (
     <div>
       <Navbar />
-      <section className="mx-100 my-50 "></section>
+      <HeroSection />
+      <CategoryCarousel />
+      <StatsDisplay />
+      <Footer />
     </div>
   );
 };
