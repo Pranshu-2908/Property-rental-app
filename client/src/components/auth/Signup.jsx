@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { setLoading } from "../../redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
+import BgGradient from "../shared/BgGradient";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -53,6 +54,7 @@ const Signup = () => {
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
+        <BgGradient />
         <form
           onSubmit={submitHandler}
           className=" w-1/3 border border-gray-300 rounded-2xl p-4 my-10 backdrop-blur-md"

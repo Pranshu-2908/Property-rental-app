@@ -2,7 +2,7 @@ import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="text-black pt-2 border-t-2 border-slate-800">
+    <footer className="text-black pt-2 border-t-2 border-slate-800 mt-2">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
         {/* Left Side - Company Info */}
         <div className="text-center md:text-left mb-4 md:mb-0">

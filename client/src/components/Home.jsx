@@ -2,13 +2,15 @@ import HeroSection from "./home/HeroSection";
 import Navbar from "./shared/Navbar";
 import CategoryCarousel from "./home/CategoryCarousel";
 import StatsDisplay from "./home/StatsDisplay";
-import Footer from "./home/Footer";
+import Footer from "./shared/Footer";
+import BgGradient from "./shared/BgGradient";
 
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow ">
+      <BgGradient />
+      <main className="flex-grow scrollable">
         <HeroSection />
         <CategoryCarousel />
         <StatsDisplay />
