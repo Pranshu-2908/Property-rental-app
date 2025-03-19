@@ -1,9 +1,8 @@
-import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { House, HouseIcon, LogOut, User2 } from "lucide-react";
+import { HouseIcon, LogOut, User2 } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
