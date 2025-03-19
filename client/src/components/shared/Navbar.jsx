@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
@@ -9,26 +9,36 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   return (
-    <nav className="container flex items-center justify-between  mx-auto mt-2">
+    <nav className="container flex items-center justify-between mx-auto mt-2">
       <div>
-        <div className="flex gap-4 lg:gap-6 sm:gap-2">
+        <div className="flex flex-col items-center sm:flex-row gap-4 lg:gap-6 sm:gap-2">
           <HouseIcon className="w-8 h-8 sm:h-6 sm:w-6 lg:w-12 lg:h-12" />
-          <h1 className="text-3xl font-bold sm:text-2xl lg:text-5xl">
+          <h1 className="text-xl font-bold sm:text-2xl lg:text-5xl">
             Dream<span className="text-purple-600">Homes</span>
           </h1>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-4 sm:gap-2 lg:gap-12">
-        <ul className="flex text-xl items-center gap-8 sm:gap-4 lg:gap-12 sm:text-lg lg:text-2xl">
+      <div className="flex flex-col-reverse sm:flex-row items-center justify-center gap-4 sm:gap-2 lg:gap-12">
+        <ul className="flex flex-col sm:flex-row text-sm items-center gap-2 sm:gap-4 lg:gap-12 sm:text-lg lg:text-2xl">
           <li>
-            <Link to="/" className="hover:text-violet-700">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? "text-purple-700 font-bold" : "text-black"
+              }
+            >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/property" className="hover:text-violet-700">
+            <NavLink
+              to="/property"
+              className={({ isActive }) =>
+                isActive ? "text-purple-700 font-bold" : "text-black"
+              }
+            >
               Explore Properties
-            </Link>
+            </NavLink>
           </li>
         </ul>
         {!user ? (
@@ -36,13 +46,13 @@ const Navbar = () => {
             <Link to="/login">
               <Button
                 variant="outline"
-                className="text-lg cursor-pointer sm:text-sm lg:text-lg"
+                className="text-sm  cursor-pointer sm:text-lg"
               >
                 Login
               </Button>
             </Link>
             <Link to="/signup">
-              <Button className="bg-purple-800 hover:bg-slate-900 text-white text-lg cursor-pointer sm:text-sm lg:text-lg">
+              <Button className="bg-purple-800 hover:bg-slate-900 text-white text-sm cursor-pointer sm:text-lg">
                 Signup
               </Button>
             </Link>

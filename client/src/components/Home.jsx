@@ -7,15 +7,15 @@ import BgGradient from "./shared/BgGradient";
 
 const Home = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen w-full">
       <Navbar />
       <BgGradient />
-      <main className="flex-grow scrollable">
+      <main className="flex-grow">
         <HeroSection />
         <CategoryCarousel />
         <StatsDisplay />
       </main>
-      <Footer />
+      <Footer className="mt-auto w-full" />
     </div>
   );
 };

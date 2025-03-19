@@ -14,8 +14,8 @@ const Property = () => {
       {/* <BgGradient /> */}
       <main className="flex-grow">
         <div className="max-w-[85%] mx-auto mt-5">
-          <div className="flex gap-5">
-            <div className="w-[20%]">
+          <div className="flex flex-col lg:flex-row gap-5">
+            <div className="w-full lg:w-[20%]">
               <FilterCard />
             </div>
             {propsArray.length <= 0 ? (

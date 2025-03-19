@@ -53,11 +53,11 @@ const Signup = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto">
+      <div className="flex items-center justify-center mx-auto bg-linear-to-b from-purple-50 to-white">
         <BgGradient />
         <form
           onSubmit={submitHandler}
-          className=" w-1/3 border border-gray-300 rounded-2xl p-4 my-10 backdrop-blur-md"
+          className=" sm:w-1/3 border border-gray-300 rounded-2xl p-4 my-10 backdrop-blur-md"
         >
           <h1 className="text-3xl font-bold mb-5">Sign Up</h1>
           <div className="my-5">

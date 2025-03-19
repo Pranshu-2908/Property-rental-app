@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative mx-auto flex flex-col gap-10 items-center justify-center max-w-7xl mt-20">
+    <section className="relative mx-auto flex flex-col gap-5 sm:gap-10 items-center justify-center max-w-7xl mt-10 sm:mt-20">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl"
@@ -20,14 +20,14 @@ const HeroSection = () => {
       </div>
       <div className="flex">
         <div className="flex relative px-5 py-2 rounded-full border-2 shadow-2xl border-purple-400 hover:bg-purple-200 transition-all duration-700 hover:border-purple-700">
-          <Sparkles className="w-6 h-6 mr-2 text-purple-600 animate-pulse" />
-          <p className="text-base text-purple-600 cursor-default">
+          <Sparkles className="w-4 h-4 sm:w-6 mt-1 sm:h-6 mr-2 text-purple-600 animate-pulse" />
+          <p className="text-md sm:text-md md:text-lg text-purple-600 cursor-default">
             No.1 Property Management system
           </p>
         </div>
       </div>
 
-      <div className="font-bold text-5xl py-8 text-center max-w-2xl sm:max-w-xl sm:text-4xl lg:max-w-2xl lg:text-6xl">
+      <div className="font-bold text-4xl py-8 text-center max-w-sm sm:max-w-xl sm:text-5xl lg:max-w-2xl lg:text-6xl mx-auto">
         Search, Apply and get your
         <span className="relative inline-block">
           <span className="relative z-10 px-2">Dream House</span>

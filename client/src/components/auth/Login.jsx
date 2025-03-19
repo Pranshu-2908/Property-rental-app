@@ -52,13 +52,12 @@ const Login = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto">
-        <BgGradient />
+      <div className="flex items-center justify-center mx-auto bg-linear-to-b from-purple-50 to-white">
         <form
           onSubmit={submitHandler}
-          className=" w-1/3 border border-gray-200 rounded-2xl p-4 my-10 backdrop-blur-md"
+          className=" sm:w-1/3 border border-gray-300 rounded-2xl p-4 my-10 backdrop-blur-md"
         >
-          <h1 className="text-3xl font-bold mb-5">Login</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-5">Login</h1>
           <div className="my-5">
             <Label className="text-lg">Login as</Label>
             <RadioGroup
@@ -122,12 +121,12 @@ const Login = () => {
             </Button>
           )}
 
-          <span className="mt-5 flex gap-2 justify-center">
+          <div className="mt-5 flex gap-2 justify-center">
             New to DreamHomes?
             <Link className="text-slate-600 hover:text-blue-600" to="/signup">
               Regiser here
             </Link>
-          </span>
+          </div>
         </form>
       </div>
     </div>

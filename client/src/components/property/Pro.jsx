@@ -21,7 +21,7 @@ const Pro = () => {
         <div>
           <h1 className="font-bold text-2xl ">Title</h1>
           <p className="text-base mb-4 text-gray-600">Location</p>
-          <p className="text-sm text-gray-600">
+          <p className="hidden sm:inline text-sm text-gray-600">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime sunt
             ut totam dolores repellendus . Lorem, ipsum dolor sit amet
             consectetur adipisicing elit. Quas, vitae veniam illum natus illo
@@ -30,10 +30,10 @@ const Pro = () => {
             consequuntur molestiae dicta sit vero? Aperiam, voluptatum?
           </p>
         </div>
-        <div className="flex flex-col items-center gap-2 mt-4 lg:flex lg:flex-row">
+        <div className="flex items-center gap-1 sm:gap-2 mt-4 mx-auto">
           <Badge
             className={
-              "text-blue-700 font-bold text-md border-2 border-gray-400 hover:scale-110 transition-all duration-300"
+              "text-blue-700 font-bold text-xs border-2 border-gray-400 hover:scale-110 transition-all duration-300"
             }
             variant="ghost"
           >
@@ -41,7 +41,7 @@ const Pro = () => {
           </Badge>
           <Badge
             className={
-              "text-red-700 font-bold text-md border-2 border-gray-400 hover:scale-110 transition-all duration-300"
+              "text-red-700 font-bold text-xs border-2 border-gray-400 hover:scale-110 transition-all duration-300"
             }
             variant="ghost"
           >
@@ -49,7 +49,7 @@ const Pro = () => {
           </Badge>
           <Badge
             className={
-              "text-purple-700 font-bold text-md border-2 border-gray-400 hover:scale-110 transition-all duration-300"
+              "text-purple-700 font-bold text-xs border-2 border-gray-400 hover:scale-110 transition-all duration-300"
             }
             variant="ghost"
           >
