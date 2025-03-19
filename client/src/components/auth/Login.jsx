@@ -9,7 +9,7 @@ import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/contains";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../../redux/authSlice";
+import { setLoading, setUser } from "../../redux/authSlice";
 import { Loader2 } from "lucide-react";
 import BgGradient from "../shared/BgGradient";
 
@@ -38,6 +38,7 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.status == "success") {
+        dispatch(setUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);
       }

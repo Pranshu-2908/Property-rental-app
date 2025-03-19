@@ -19,7 +19,8 @@ const Pro = () => {
           </Button>
         </div>
         <div>
-          <h1 className="font-bold text-lg my-4">Title</h1>
+          <h1 className="font-bold text-2xl ">Title</h1>
+          <p className="text-base mb-4 text-gray-600">Location</p>
           <p className="text-sm text-gray-600">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime sunt
             ut totam dolores repellendus . Lorem, ipsum dolor sit amet

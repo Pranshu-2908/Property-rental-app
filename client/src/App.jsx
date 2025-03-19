@@ -3,6 +3,7 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Home from "./components/Home";
 import Property from "./components/Property";
+import Profile from "./components/ui/Profile";
 
 const appRouter = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/property",
     element: <Property />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 

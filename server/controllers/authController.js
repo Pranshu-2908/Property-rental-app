@@ -31,9 +31,7 @@ const createSendToken = (user, statusCode, message, res) => {
     status: 'success',
     token,
     message: message,
-    data: {
-      user
-    }
+    user
   });
 };
 
