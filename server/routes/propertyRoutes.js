@@ -13,6 +13,11 @@ router
     propertyController.uploadPropertyImages, // Image upload middleware
     propertyController.createProperty
   );
+router.get(
+  '/rented',
+  authController.protect,
+  propertyController.getRentedProperties
+);
 
 router
   .route('/:id')

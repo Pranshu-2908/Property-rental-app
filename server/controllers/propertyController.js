@@ -122,3 +122,23 @@ exports.deleteProperty = catchAsync(async (req, res, next) => {
     data: null
   });
 });
+
+exports.getRentedProperties = catchAsync(async (req, res, next) => {
+  const tenantId = req.user.id; // Get logged-in user's ID
+
+  const properties = await Property.find({ tenant: tenantId });
+
+  if (!properties.length) {
+    return next(
+      new AppError('No rented properties found for this tenant', 404)
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    results: properties.length,
+    data: {
+      properties
+    }
+  });
+});

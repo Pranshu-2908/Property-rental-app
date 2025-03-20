@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./shared/Navbar";
 import Footer from "./shared/Footer";
-import { Edit2, Mail, Phone } from "lucide-react";
+import { Edit2, Loader, Mail, Phone } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSelector } from "react-redux";
 import TenantProfile from "./profile/TenantProfile";
@@ -27,8 +27,11 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="flex justify-center items-center min-h-screen text-xl">
-        Loading profile... Please wait.
+      <div className="flex justify-center gap-4 items-center min-h-screen text-xl">
+        <Loader className="animate-spin w-6 h-6 sm:w-10 sm:h-10 text-purple-600" />
+        <p className="text-lg md:text-xl text-purple-600">
+          Loading profile... Please wait.
+        </p>
       </div>
     );
   }

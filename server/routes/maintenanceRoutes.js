@@ -13,7 +13,7 @@ router
   )
   .get(
     authController.protect,
-    authController.restrictTo('landlord'),
+    authController.restrictTo(['landlord', 'tenant']),
     maintenanceController.getAllMaintenanceRequests
   );
 
