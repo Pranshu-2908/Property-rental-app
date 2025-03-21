@@ -18,11 +18,14 @@ const createSendToken = (user, statusCode, message, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // Required for HTTPS in production
+    sameSite: 'None' // Enables cross-site cookies
   };
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
+  console.log('🔹 Cookies Sent:', res.getHeaders()['set-cookie']);
 
   // Remove password from output
   user.password = undefined;
@@ -96,6 +99,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
+  console.log('Received Cookie Token:', req.cookies.jwt);
 
   if (!token) {
     return next(
@@ -121,6 +125,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
   req.user = currentUser;
+  console.log(currentUser);
   next();
 });
 

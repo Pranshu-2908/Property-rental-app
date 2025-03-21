@@ -26,11 +26,11 @@ import {
 
 const FilterCard = () => {
   return (
-    <div className="flex flex-col gap-3 border-2 border-gray-400 rounded-2xl p-2 bg-purple-100 items-center">
+    <div className="flex flex-col gap-3 border-2 border-gray-200 rounded-2xl p-2 bg-purple-50 items-center">
       <h1 className="text-lg"> Filter Properties</h1>
       <hr className="my-3 border-black w-full" />
 
-      <div className="flex sm:flex-col">
+      <div className="flex flex-col gap-1 md:gap-1 lg:gap-4 md:flex-row lg:flex-col">
         <div>
           <Select>
             <SelectTrigger className="w-[200px]">

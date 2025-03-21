@@ -5,11 +5,11 @@ import { Badge } from "../ui/badge";
 
 const Pro = ({ prop }) => {
   return (
-    <div className="shadow-xl bg-purple-200 flex flex-col lg:flex lg:flex-row border-2 border-gray-400 rounded-md">
+    <div className="shadow-xl bg-purple-50 flex flex-col lg:flex lg:flex-row border-2 border-gray-200 rounded-md">
       <img
         src="https://www.bhg.com/thmb/H9VV9JNnKl-H1faFXnPlQfNprYw=/1799x0/filters:no_upscale():strip_icc()/white-modern-house-curved-patio-archway-c0a4a3b3-aa51b24d14d0464ea15d36e05aa85ac9.jpg"
         alt="my name is"
-        className="m-3 border-2 border-slate-800 rounded-md lg:w-[25%]"
+        className="m-3 border-2 border-slate-400 rounded-md lg:w-[25%]"
       />
       <div className="flex-4/5 p-5">
         <div className="flex justify-between">
@@ -19,9 +19,9 @@ const Pro = ({ prop }) => {
           </Button>
         </div>
         <div>
-          <h1 className="font-bold text-2xl ">{prop.title}</h1>
-          <p className="text-base mb-4 text-gray-600">{prop.location}</p>
-          <p className="hidden sm:inline text-sm text-gray-600">
+          <h1 className="font-bold text-2xl">{prop.title}</h1>
+          <p className="text-base mb-4 text-gray-400">{prop.location}</p>
+          <p className="hidden sm:inline text-sm text-gray-400">
             {prop.description}
           </p>
         </div>
@@ -52,11 +52,11 @@ const Pro = ({ prop }) => {
           </Badge>
         </div>
       </div>
-      <div className="flex-1/5 bg-purple-300 content-center p-5 sm:p-10">
+      <div className="flex-1/5 bg-purple-100 rounded-m content-center p-5 sm:p-10">
         <div className="flex lg:flex-col gap-8 items-center justify-evenly">
           <div className="flex flex-col sm:flex-row lg:flex-col items-center justify-center">
             <span className="font-bold text-2xl flex gap-2">
-              $10000
+              ₹{prop.price}
               <Expand size="16" className="my-auto" />
             </span>
             <span className="text-md hidden lg:inline">Security deposit</span>

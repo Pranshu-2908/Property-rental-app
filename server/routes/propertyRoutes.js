@@ -18,6 +18,11 @@ router.get(
   authController.protect,
   propertyController.getRentedProperties
 );
+router.get(
+  '/owned',
+  authController.protect,
+  propertyController.getOwnedProperties
+);
 
 router
   .route('/:id')

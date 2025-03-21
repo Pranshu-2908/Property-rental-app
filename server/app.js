@@ -14,6 +14,7 @@ const propertyRouter = require('./routes/propertyRoutes');
 const tenancyRouter = require('./routes/tenancyRoutes');
 const maintenanceRouter = require('./routes/maintenanceRoutes');
 const paymentRouter = require('./routes/paymentRoutes');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
+app.use(cookieParser());
 
 // 3) ROUTES
 app.use('/api/v1/users', userRouter);
