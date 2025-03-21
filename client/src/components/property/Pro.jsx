@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Bookmark, Expand } from "lucide-react";
 import { Badge } from "../ui/badge";
 
-const Pro = () => {
+const Pro = ({ prop }) => {
   return (
     <div className="shadow-xl bg-purple-200 flex flex-col lg:flex lg:flex-row border-2 border-gray-400 rounded-md">
       <img
@@ -19,15 +19,10 @@ const Pro = () => {
           </Button>
         </div>
         <div>
-          <h1 className="font-bold text-2xl ">Title</h1>
-          <p className="text-base mb-4 text-gray-600">Location</p>
+          <h1 className="font-bold text-2xl ">{prop.title}</h1>
+          <p className="text-base mb-4 text-gray-600">{prop.location}</p>
           <p className="hidden sm:inline text-sm text-gray-600">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime sunt
-            ut totam dolores repellendus . Lorem, ipsum dolor sit amet
-            consectetur adipisicing elit. Quas, vitae veniam illum natus illo
-            nisi aperiam blanditiis ab, quidem ut delectus? Repellat, excepturi
-            sapiente iure debitis culpa sint quia eveniet nesciunt omnis? Quidem
-            consequuntur molestiae dicta sit vero? Aperiam, voluptatum?
+            {prop.description}
           </p>
         </div>
         <div className="flex items-center gap-1 sm:gap-2 mt-4 mx-auto">
@@ -45,7 +40,7 @@ const Pro = () => {
             }
             variant="ghost"
           >
-            family
+            {prop.tenantsPrefferd}
           </Badge>
           <Badge
             className={
@@ -53,20 +48,20 @@ const Pro = () => {
             }
             variant="ghost"
           >
-            Available
+            {prop.available ? "Available" : "Not Available"}
           </Badge>
         </div>
       </div>
       <div className="flex-1/5 bg-purple-300 content-center p-5 sm:p-10">
-        <div className="flex flex-col gap-8 items-center justify-center">
-          <div className="flex flex-col items-center justify-center">
+        <div className="flex lg:flex-col gap-8 items-center justify-evenly">
+          <div className="flex flex-col sm:flex-row lg:flex-col items-center justify-center">
             <span className="font-bold text-2xl flex gap-2">
               $10000
               <Expand size="16" className="my-auto" />
             </span>
-            <span className="text-md">Security deposit</span>
+            <span className="text-md hidden lg:inline">Security deposit</span>
           </div>
-          <div className="flex flex-col gap-2 items-center justify-center">
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-2 items-center justify-center">
             <Button className="cursor-pointer">Contact Owner</Button>
             <Button className="cursor-pointer">Make Offer</Button>
           </div>

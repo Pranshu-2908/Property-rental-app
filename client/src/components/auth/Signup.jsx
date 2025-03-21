@@ -57,7 +57,7 @@ const Signup = () => {
         <BgGradient />
         <form
           onSubmit={submitHandler}
-          className=" sm:w-1/3 border border-gray-300 rounded-2xl p-4 my-10 backdrop-blur-md"
+          className=" sm:w-1/3 border border-gray-300 rounded-2xl p-4 my-10"
         >
           <h1 className="text-3xl font-bold mb-5">Sign Up</h1>
           <div className="my-5">

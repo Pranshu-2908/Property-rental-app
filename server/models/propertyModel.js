@@ -23,28 +23,7 @@ const propertySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  // location: {
-  //   address: {
-  //     type: String,
-  //     required: true,
-  //     trim: true
-  //   },
-  //   city: {
-  //     type: String,
-  //     required: true,
-  //     trim: true
-  //   },
-  //   state: {
-  //     type: String,
-  //     required: true,
-  //     trim: true
-  //   },
-  //   zipcode: {
-  //     type: String,
-  //     required: true,
-  //     trim: true
-  //   }
-  // },
+
   location: {
     type: String,
     required: true
@@ -52,7 +31,8 @@ const propertySchema = new mongoose.Schema({
   tenantsPrefferd: {
     type: String,
     enum: ['Students', 'Bachelors', 'Co-living', 'Family'],
-    requird: 'true'
+    requird: true,
+    default: 'Students'
   },
   available: {
     type: Boolean,

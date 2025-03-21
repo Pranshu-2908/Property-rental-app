@@ -76,7 +76,9 @@ const Navbar = () => {
                     />
                   </Avatar>
                   <div>
-                    <h2 className="font-medium">Pranshu Patel</h2>
+                    <h2 className="font-medium">
+                      {user?.name || "Error Fetch"}
+                    </h2>
                     <p className="text-sm text-muted-foreground">
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Quae, maiores.

@@ -4,10 +4,12 @@ import Footer from "./shared/Footer";
 import FilterCard from "./property/FilterCard";
 import Pro from "./property/Pro";
 import BgGradient from "./shared/BgGradient";
-
-const propsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { useSelector } from "react-redux";
+import useGetAllProps from "../hooks/useGetAllProps";
 
 const Property = () => {
+  useGetAllProps();
+  const { allProps } = useSelector((store) => store.property);
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -18,16 +20,16 @@ const Property = () => {
             <div className="w-full lg:w-[20%]">
               <FilterCard />
             </div>
-            {propsArray.length <= 0 ? (
+            {allProps.length <= 0 ? (
               <span>No Property Found!!!!</span>
             ) : (
               <div className="flex-1 h-[80vh] overflow-y-auto pb-5 scrollable">
                 <div className="flex flex-col gap-10 m-1">
-                  {propsArray.map((prop, ind) => (
-                    <ul key={ind}>
+                  {allProps.map((prop) => (
+                    <ul key={prop?._id}>
                       <li>
                         {" "}
-                        <Pro />
+                        <Pro prop={prop} />
                       </li>
                     </ul>
                   ))}
