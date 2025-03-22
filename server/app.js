@@ -21,7 +21,7 @@ const app = express();
 // 1) GLOBAL MIDDLEWARES
 app.use(
   cors({
-    origin: 'http://localhost:5175',
+    origin: 'http://localhost:5174',
     credentials: true // Allow cookies and authorization headers
   })
 );

@@ -20,10 +20,10 @@ const createSendToken = (user, statusCode, message, res) => {
     ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production', // Required for HTTPS in production
-    sameSite: 'None' // Enables cross-site cookies
+    sameSite: 'lax' // Enables cross-site cookies
   };
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
+  console.log({ token: token });
   res.cookie('jwt', token, cookieOptions);
   console.log('🔹 Cookies Sent:', res.getHeaders()['set-cookie']);
 
@@ -79,7 +79,7 @@ exports.logout = catchAsync(async (req, res, next) => {
     expires: new Date(0), // Instantly expires cookie
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production', // Works only over HTTPS
-    sameSite: 'None' // Required for cross-origin requests
+    sameSite: 'lax' // Required for cross-origin requests
   });
 
   res.status(200).json({
@@ -102,6 +102,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   console.log('Received Cookie Token:', req.cookies.jwt);
 
   if (!token) {
+    console.log({ error: 'user not logged in error!' });
     return next(
       new AppError('You are not logged in! Please log in to get access.', 401)
     );
@@ -109,7 +110,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 2) Verify token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
+  console.log({ decoded: decoded });
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
@@ -125,7 +126,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
   req.user = currentUser;
-  console.log(currentUser);
+  console.log({ user: currentUser });
   next();
 });
 

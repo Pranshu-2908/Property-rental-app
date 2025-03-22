@@ -1,12 +1,33 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { HouseIcon, LogOut, User2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { USER_API_END_POINT } from "../../utils/contains";
+import { setUser } from "../../redux/authSlice";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.status === "success") {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
   return (
     <nav className="container flex items-center justify-between mx-auto mt-2">
       <div>
@@ -61,7 +82,7 @@ const Navbar = () => {
             <PopoverTrigger asChild>
               <Avatar className="cursor-pointer size-12">
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
+                  src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
                   alt="@shadcn"
                 />
               </Avatar>
@@ -71,7 +92,7 @@ const Navbar = () => {
                 <div className="flex gap-4">
                   <Avatar>
                     <AvatarImage
-                      src="https://github.com/shadcn.png"
+                      src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
                       alt="@shadcn"
                     />
                   </Avatar>
@@ -94,7 +115,9 @@ const Navbar = () => {
                   </div>
                   <div className="flex w-fit items-center cursor-pointer">
                     <LogOut />
-                    <Button variant="link">Logout</Button>
+                    <Button variant="link" onClick={logoutHandler}>
+                      Logout
+                    </Button>
                   </div>
                 </div>
               </div>
