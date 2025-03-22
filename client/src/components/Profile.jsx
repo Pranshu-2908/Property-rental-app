@@ -16,9 +16,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useGetAllRentedProps from "../hooks/useGetAllRentedProps";
+import useGetAllOwnedProps from "../hooks/useGetAllOwnedProps";
 
 const Profile = () => {
+  useGetAllOwnedProps();
   useGetAllRentedProps();
+
   const { user } = useSelector((store) => store.auth);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedUser, setUpdatedUser] = useState({

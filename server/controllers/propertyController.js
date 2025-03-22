@@ -144,10 +144,10 @@ exports.getRentedProperties = catchAsync(async (req, res, next) => {
 exports.getOwnedProperties = catchAsync(async (req, res, next) => {
   const landlordId = req.user.id; // Get logged-in user's ID
 
-  const properties = await Property.find({ landlord: landlordId });
+  let properties = await Property.find({ landlord: landlordId });
 
   if (!properties.length) {
-    return next(new AppError('No properties found for this landlord', 404));
+    properties = [];
   }
 
   res.status(200).json({

@@ -5,6 +5,7 @@ const propertySlice = createSlice({
   initialState: {
     allProps: [],
     rentedProps: [],
+    ownedProps: [],
   },
   reducers: {
     //actions
@@ -14,9 +15,13 @@ const propertySlice = createSlice({
     setAllRentedProps: (state, action) => {
       state.rentedProps = action.payload;
     },
+    setAllOwnedProps: (state, action) => {
+      state.ownedProps = action.payload;
+    },
   },
 });
 
-export const { setAllProps, setAllRentedProps } = propertySlice.actions;
+export const { setAllProps, setAllRentedProps, setAllOwnedProps } =
+  propertySlice.actions;
 
 export default propertySlice.reducer;
