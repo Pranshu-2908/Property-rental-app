@@ -14,19 +14,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 const TenantProfile = () => {
+  const { allReq } = useSelector((store) => store.maintenance);
+  console.log("Requests:", allReq);
   const { rentedProps } = useSelector((store) => store.property);
-  const { user } = useSelector((store) => store.auth) || {};
   const [open, setOpen] = useState(false);
   const [description, setDescription] = useState("");
-  const [maintenanceRequests, setMaintenanceRequests] = useState(
-    user?.maintenanceRequests || [
-      {
-        _id: "placeholder2",
-        issue: "No Maintenance Requests Yet",
-        status: "N/A",
-      },
-    ]
-  );
+  const [maintenanceRequests, setMaintenanceRequests] = useState(allReq || []);
+  console.log("Requests:", allReq);
+  console.log("Maintenance Requests State:", maintenanceRequests);
 
   // Handle submitting a new maintenance request
   const handleSubmit = () => {
@@ -100,17 +95,23 @@ const TenantProfile = () => {
             </Dialog>
           </div>
           <div className="flex flex-col gap-4">
-            {maintenanceRequests.map((request) => (
-              <div
-                key={request._id}
-                className="border border-gray-300 rounded-lg p-4 shadow-md flex justify-between"
-              >
-                <h3 className="text-lg font-semibold">{request.issue}</h3>
-                <Badge className="bg-yellow-400 text-black">
-                  {request.status}
-                </Badge>
-              </div>
-            ))}
+            {maintenanceRequests.length > 0 ? (
+              maintenanceRequests.map((request) => (
+                <div
+                  key={request._id}
+                  className="border border-gray-300 rounded-lg p-4 shadow-md flex justify-between"
+                >
+                  <h3 className="text-lg font-semibold">
+                    {request.description}
+                  </h3>
+                  <Badge className="bg-yellow-400 text-black">
+                    {request.status}
+                  </Badge>
+                </div>
+              ))
+            ) : (
+              <div>No maintenance request yet!!</div>
+            )}
           </div>
         </section>
       ) : (

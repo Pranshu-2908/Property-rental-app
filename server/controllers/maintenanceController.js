@@ -20,9 +20,19 @@ exports.createMaintenanceRequest = catchAsync(async (req, res, next) => {
 
 // 2) Get All Maintenance Requests (Landlord/Admin)
 exports.getAllMaintenanceRequests = catchAsync(async (req, res, next) => {
-  const requests = await Maintenance.find()
-    .populate('tenant', 'name email')
-    .populate('property', 'title');
+  let requests;
+
+  if (req.user.role === 'tenant') {
+    console.log('passes tenant test');
+    requests = await Maintenance.find({ tenant: req.user.id })
+      .populate('tenant', 'name email')
+      .populate('property', 'title');
+  } else {
+    requests = await Maintenance.find()
+      .populate('tenant', 'name email')
+      .populate('property', 'title');
+  }
+  console.log({ requests: requests });
   res.status(200).json({
     status: 'success',
     data: { requests }
