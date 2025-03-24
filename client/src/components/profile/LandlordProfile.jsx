@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,18 +20,25 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import axios from "axios";
+import { MAINTENANCE_API_END_POINT } from "../../utils/contains";
+import { toast } from "sonner";
+import { updateMaintenanceStatus } from "../../redux/maitenanceSlice";
 
 const LandlordProfile = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((store) => store.auth) || {};
+  const { user } = useSelector((store) => store.auth);
   const { ownedProps } = useSelector((store) => store.property);
+  const { allReq } = useSelector((store) => store.maintenance);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isMaintenanceModalOpen, setIsMaintenanceModalOpen] = useState(false);
   const [editedProperty, setEditedProperty] = useState({});
-  const [maintenanceStatus, setMaintenanceStatus] = useState("");
-
+  console.log({ allReq: allReq });
+  const propReq = allReq.filter(
+    (req) => req.property._id === selectedProperty?._id
+  );
   const openEditModal = (property) => {
     setSelectedProperty(property);
     setEditedProperty(property);
@@ -51,7 +58,25 @@ const LandlordProfile = () => {
   const handleEditChange = (e) => {
     setEditedProperty({ ...editedProperty, [e.target.name]: e.target.value });
   };
-
+  const dispatch = useDispatch();
+  const updateHandler = async (id, value) => {
+    try {
+      const res = await axios.patch(
+        `${MAINTENANCE_API_END_POINT}/${id}`,
+        {
+          status: value,
+        },
+        { withCredentials: true }
+      );
+      if (res.data?.status === "success") {
+        dispatch(updateMaintenanceStatus({ id, status: value }));
+        toast.success("status updated");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("failed to update");
+    }
+  };
   return (
     <div className="flex flex-col gap-10">
       {/* Owned Properties Section */}
@@ -75,7 +100,7 @@ const LandlordProfile = () => {
                   />
                   <h3 className="text-lg font-semibold">{property.title}</h3>
                   <p className="text-sm text-gray-600">{property.location}</p>
-                  <Badge className="mt-2">₹{property.rent} / month</Badge>
+                  <Badge className="mt-2">₹{property.price} / month</Badge>
 
                   {/* Maintenance Requests Button */}
                   <Button
@@ -167,13 +192,13 @@ const LandlordProfile = () => {
           <DialogHeader>
             <DialogTitle>Manage Maintenance Requests</DialogTitle>
           </DialogHeader>
-          {selectedProperty?.maintenanceRequests?.length > 0 ? (
-            selectedProperty.maintenanceRequests.map((req, index) => (
-              <div key={index} className="space-y-2">
-                <p className="text-sm font-semibold">{req.issue}</p>
+          {propReq.length > 0 ? (
+            propReq.map((req, index) => (
+              <div key={index} className="flex justify-between">
+                <p className="text-sm ">{req.description}</p>
                 <Select
                   value={req.status}
-                  onValueChange={(value) => setMaintenanceStatus(value)}
+                  onValueChange={(value) => updateHandler(req._id, value)}
                 >
                   <SelectTrigger>{req.status}</SelectTrigger>
                   <SelectContent>
@@ -189,7 +214,7 @@ const LandlordProfile = () => {
           )}
           <DialogFooter>
             <Button onClick={() => setIsMaintenanceModalOpen(false)}>
-              Close
+              close
             </Button>
           </DialogFooter>
         </DialogContent>

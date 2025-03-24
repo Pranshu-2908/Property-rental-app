@@ -9,12 +9,10 @@ const useGetAllReq = () => {
   useEffect(() => {
     const fetchAllReq = async () => {
       try {
-        console.log(`${MAINTENANCE_API_END_POINT}/`);
         const res = await axios.get(`${MAINTENANCE_API_END_POINT}/`, {
           withCredentials: true,
         });
         if (res.data.status === "success") {
-          console.log({ data: res.data.data.requests });
           dispatch(setAllReq(res.data.data.requests));
         }
       } catch (error) {

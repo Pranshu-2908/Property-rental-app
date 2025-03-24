@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,28 +12,55 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { RadioGroup } from "../ui/radio-group";
+import { toast } from "sonner";
+import { setLoading } from "../../redux/authSlice";
+import axios from "axios";
+import { MAINTENANCE_API_END_POINT } from "../../utils/contains";
+import { setNewReq } from "../../redux/maitenanceSlice";
+import { useNavigate } from "react-router-dom";
 
 const TenantProfile = () => {
   const { allReq } = useSelector((store) => store.maintenance);
-  console.log("Requests:", allReq);
   const { rentedProps } = useSelector((store) => store.property);
   const [open, setOpen] = useState(false);
-  const [description, setDescription] = useState("");
-  const [maintenanceRequests, setMaintenanceRequests] = useState(allReq || []);
-  console.log("Requests:", allReq);
-  console.log("Maintenance Requests State:", maintenanceRequests);
+  const [inputData, setInputData] = useState({
+    property: "",
+    description: "",
+  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const changeEventHandler = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
 
   // Handle submitting a new maintenance request
-  const handleSubmit = () => {
-    if (description.trim() === "") return;
-    const newRequest = {
-      _id: Date.now().toString(),
-      issue: description,
-      status: "Pending", // Default status
-    };
-    setMaintenanceRequests([...maintenanceRequests, newRequest]);
-    setDescription("");
-    setOpen(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(setLoading(true));
+      const res = await axios.post(`${MAINTENANCE_API_END_POINT}`, inputData, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      if (res.data.status === "success") {
+        dispatch(setNewReq(res.data.data.newRequest));
+        navigate("/profile");
+        toast.success(res.data.message);
+      }
+      setOpen(false);
+      setInputData({
+        property: "",
+        description: "",
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   return (
@@ -78,11 +105,40 @@ const TenantProfile = () => {
                 <DialogHeader>
                   <DialogTitle>Submit Maintenance Request</DialogTitle>
                 </DialogHeader>
-                <Textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Describe the issue..."
-                />
+                <form onSubmit={handleSubmit}>
+                  <div className="my-5">
+                    <Label className="text-lg">Choose Property</Label>
+                    <RadioGroup
+                      defaultValue="tenant"
+                      className="flex gap-2 justify-start ml-5"
+                    >
+                      {rentedProps.map((prop) => {
+                        return (
+                          <div
+                            key={prop._id}
+                            className="flex items-center space-x-2"
+                          >
+                            <Input
+                              type="radio"
+                              name="property"
+                              value={prop._id}
+                              checked={inputData.property === `${prop._id}`}
+                              onChange={changeEventHandler}
+                              className="cursor-pointer size-4"
+                            />
+                            <Label>{prop.title}</Label>
+                          </div>
+                        );
+                      })}
+                    </RadioGroup>
+                  </div>
+                  <Textarea
+                    name="description"
+                    value={inputData.description}
+                    onChange={changeEventHandler}
+                    placeholder="Describe the issue..."
+                  />
+                </form>
                 <DialogFooter>
                   <Button
                     onClick={handleSubmit}
@@ -95,8 +151,8 @@ const TenantProfile = () => {
             </Dialog>
           </div>
           <div className="flex flex-col gap-4">
-            {maintenanceRequests.length > 0 ? (
-              maintenanceRequests.map((request) => (
+            {allReq.length > 0 ? (
+              allReq.map((request) => (
                 <div
                   key={request._id}
                   className="border border-gray-300 rounded-lg p-4 shadow-md flex justify-between"

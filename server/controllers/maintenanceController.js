@@ -5,7 +5,9 @@ const catchAsync = require('../utils/catchAsync');
 // 1) Create a Maintenance Request (Tenant Only)
 exports.createMaintenanceRequest = catchAsync(async (req, res, next) => {
   const { property, description } = req.body;
-
+  if (!property || !description) {
+    return next(new AppError('Enter all fields please', 400));
+  }
   const newRequest = await Maintenance.create({
     property,
     tenant: req.user.id,
@@ -14,6 +16,7 @@ exports.createMaintenanceRequest = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
+    message: 'New Request created',
     data: newRequest
   });
 });
@@ -23,7 +26,6 @@ exports.getAllMaintenanceRequests = catchAsync(async (req, res, next) => {
   let requests;
 
   if (req.user.role === 'tenant') {
-    console.log('passes tenant test');
     requests = await Maintenance.find({ tenant: req.user.id })
       .populate('tenant', 'name email')
       .populate('property', 'title');
@@ -32,7 +34,6 @@ exports.getAllMaintenanceRequests = catchAsync(async (req, res, next) => {
       .populate('tenant', 'name email')
       .populate('property', 'title');
   }
-  console.log({ requests: requests });
   res.status(200).json({
     status: 'success',
     data: { requests }
