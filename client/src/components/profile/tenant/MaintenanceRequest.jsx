@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
+import { setLoading } from "../../../redux/authSlice";
+import axios from "axios";
+import { MAINTENANCE_API_END_POINT } from "../../../utils/contains";
+import { setNewReq } from "../../../redux/maitenanceSlice";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
 import {
   Dialog,
   DialogTrigger,
@@ -12,26 +18,20 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { RadioGroup } from "../ui/radio-group";
-import { toast } from "sonner";
-import { setLoading } from "../../redux/authSlice";
-import axios from "axios";
-import { MAINTENANCE_API_END_POINT } from "../../utils/contains";
-import { setNewReq } from "../../redux/maitenanceSlice";
-import { useNavigate } from "react-router-dom";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { RadioGroup } from "../../ui/radio-group";
 
-const TenantProfile = () => {
-  const { allReq } = useSelector((store) => store.maintenance);
-  const { rentedProps } = useSelector((store) => store.property);
+const MaitenanceRequest = ({ rentedProps }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [inputData, setInputData] = useState({
     property: "",
     description: "",
   });
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const { allReq } = useSelector((store) => store.maintenance);
   const changeEventHandler = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
@@ -62,35 +62,8 @@ const TenantProfile = () => {
       dispatch(setLoading(false));
     }
   };
-
   return (
-    <div className="flex flex-col gap-10">
-      {/* Rented Properties Section */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Rented Properties</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rentedProps.length > 0 ? (
-            rentedProps.map((property) => (
-              <Card key={property._id} className="shadow-lg">
-                <CardContent className="p-4">
-                  <img
-                    src={property.images[0]}
-                    alt={property.title}
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                  />
-                  <h3 className="text-lg font-semibold">{property.title}</h3>
-                  <p className="text-sm text-gray-600">{property.location}</p>
-                  <Badge className="mt-2">₹{property.price} / month</Badge>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <div>No rented Properties</div>
-          )}
-        </div>
-      </section>
-
-      {/* Maintenance Requests Section */}
+    <div>
       {rentedProps.length > 0 ? (
         <section>
           <div className="flex justify-between items-center mb-4">
@@ -177,4 +150,4 @@ const TenantProfile = () => {
   );
 };
 
-export default TenantProfile;
+export default MaitenanceRequest;

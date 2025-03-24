@@ -4,8 +4,8 @@ import Footer from "./shared/Footer";
 import { Edit2, Loader, Mail, Phone } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSelector } from "react-redux";
-import TenantProfile from "./profile/TenantProfile";
-import LandlordProfile from "./profile/LandlordProfile";
+import TenantProfile from "./profile/tenant/TenantProfile";
+import LandlordProfile from "./profile/landlord/LandlordProfile";
 import {
   Dialog,
   DialogContent,
