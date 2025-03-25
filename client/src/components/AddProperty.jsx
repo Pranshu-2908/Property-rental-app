@@ -1,25 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import axios from "axios";
+import { PROPERTY_API_END_POINT } from "../utils/contains";
+import { useDispatch, useSelector } from "react-redux";
+import { setNewProp } from "../redux/propertySlice";
 
 const AddProperty = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth); // ✅ Get current user (landlord ID)
   const [property, setProperty] = useState({
     title: "",
     description: "",
     price: "",
     location: "",
-    tenantsPreferred: "Students",
+    tenantsPreferred: "",
     available: true,
     images: [],
   });
-
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProperty((prev) => ({ ...prev, [name]: value }));
+    setProperty((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleImageChange = (e) => {
@@ -38,10 +44,40 @@ const AddProperty = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // API call to save property in MongoDB
-    navigate("/landlord-profile");
+    const formData = new FormData();
+    formData.append("title", property.title);
+    formData.append("landlord", user._id);
+    formData.append("description", property.description);
+    formData.append("price", property.price);
+    formData.append("location", property.location);
+    formData.append("tenantsPreferred", property.tenantsPreferred);
+    formData.append("available", property.available);
+    property.images.forEach((image) => {
+      formData.append("images", image);
+    });
+
+    try {
+      setLoading(true);
+      const res = await axios.post(`${PROPERTY_API_END_POINT}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+
+        withCredentials: true,
+      });
+      if (res.data.status === "success") {
+        dispatch(setNewProp(res.data.data.property));
+        toast.success("Property created Successfully");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+    navigate("/profile");
   };
 
   return (
@@ -139,7 +175,7 @@ const AddProperty = () => {
             Clear
           </Button>
           <Button type="submit" className="bg-blue-500 hover:bg-blue-600">
-            Create
+            {loading ? "Submitting..." : "Create"}
           </Button>
         </div>
       </form>

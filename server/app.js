@@ -7,6 +7,7 @@ const cors = require('cors');
 // const xss = require("xss-clean");
 // const hpp = require('hpp');
 
+const cookieParser = require('cookie-parser');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const userRouter = require('./routes/userRoutes');
@@ -14,7 +15,6 @@ const propertyRouter = require('./routes/propertyRoutes');
 const tenancyRouter = require('./routes/tenancyRoutes');
 const maintenanceRouter = require('./routes/maintenanceRoutes');
 const paymentRouter = require('./routes/paymentRoutes');
-const cookieParser = require('cookie-parser');
 
 const app = express();
 

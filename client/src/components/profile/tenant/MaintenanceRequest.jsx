@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { setLoading } from "../../../redux/authSlice";
 import axios from "axios";
 import { MAINTENANCE_API_END_POINT } from "../../../utils/contains";
@@ -24,7 +23,6 @@ import { RadioGroup } from "../../ui/radio-group";
 
 const MaitenanceRequest = ({ rentedProps }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [inputData, setInputData] = useState({
     property: "",
@@ -47,7 +45,6 @@ const MaitenanceRequest = ({ rentedProps }) => {
       });
       if (res.data.status === "success") {
         dispatch(setNewReq(res.data.data.newRequest));
-        navigate("/profile");
         toast.success(res.data.message);
       }
       setOpen(false);

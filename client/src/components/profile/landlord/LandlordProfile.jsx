@@ -3,7 +3,13 @@ import { useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2, Plus, Wrench } from "lucide-react";
+import {
+  Edit2,
+  Trash2,
+  Plus,
+  Wrench,
+  SquareArrowOutUpRight,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import EditProperty from "./EditProperty";
 import DeleteProperty from "./DeleteProperty";
@@ -17,8 +23,13 @@ const LandlordProfile = () => {
   const [isMaintenanceModalOpen, setIsMaintenanceModalOpen] = useState(false);
   const [editedProperty, setEditedProperty] = useState({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  const openApplicationModal = (property) => {
+    setSelectedProperty(property);
+    setIsApplicationModalOpen(true);
+  };
   const openEditModal = (property) => {
     setSelectedProperty(property);
     setEditedProperty(property);
@@ -51,6 +62,12 @@ const LandlordProfile = () => {
             ownedProps.map((property) => (
               <Card key={property._id} className="relative shadow-lg">
                 <CardContent className="p-4">
+                  <button
+                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+                    onClick={() => openEditModal(property)}
+                  >
+                    <Edit2 size={18} />
+                  </button>
                   <img
                     src={property.images[0]}
                     alt={property.title}
@@ -60,25 +77,39 @@ const LandlordProfile = () => {
                   <p className="text-sm text-gray-600">{property.location}</p>
                   <Badge className="mt-2">₹{property.price} / month</Badge>
 
-                  <Button
-                    className="mt-3 w-full bg-yellow-500 hover:bg-yellow-600"
-                    onClick={() => openMaintenanceModal(property)}
-                  >
-                    <Wrench className="mr-2" /> Manage Maintenance
-                  </Button>
+                  {property.tenant ? (
+                    <div>
+                      <Button
+                        className="mt-3 w-full bg-yellow-500 hover:bg-yellow-600"
+                        onClick={() => openMaintenanceModal(property)}
+                      >
+                        <Wrench className="mr-2" /> Manage Maintenance
+                      </Button>
 
-                  <button
-                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-                    onClick={() => openEditModal(property)}
-                  >
-                    <Edit2 size={18} />
-                  </button>
-                  <Button
-                    className="mt-3 w-full bg-red-500 hover:bg-red-600"
-                    onClick={() => openDeleteModal(property)}
-                  >
-                    <Trash2 className="mr-2" /> Remove Property
-                  </Button>
+                      <Button
+                        className="mt-3 w-full bg-red-500 hover:bg-red-600"
+                        onClick={() => openDeleteModal(property)}
+                      >
+                        <Trash2 className="mr-2" /> Remove Property
+                      </Button>
+                    </div>
+                  ) : (
+                    <div>
+                      <Button
+                        className="mt-3 w-full bg-blue-500 hover:bg-blue-600"
+                        onClick={() => openApplicationModal(property)}
+                      >
+                        See Applications
+                        <SquareArrowOutUpRight className="mr-2" />
+                      </Button>
+                      <Button
+                        className="mt-3 w-full bg-red-500 hover:bg-red-600"
+                        onClick={() => openDeleteModal(property)}
+                      >
+                        <Trash2 className="mr-2" /> Remove Property
+                      </Button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))
