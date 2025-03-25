@@ -9,6 +9,7 @@ import {
   Plus,
   Wrench,
   SquareArrowOutUpRight,
+  Expand,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import EditProperty from "./EditProperty";
@@ -63,15 +64,21 @@ const LandlordProfile = () => {
               <Card key={property._id} className="relative shadow-lg">
                 <CardContent className="p-4">
                   <button
-                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+                    className="absolute top-3 right-3 bg-gray-200 border rounded-md border-gray-300 hover:bg-gray-200 hover:scale-110 transition-all duration-300 p-1"
                     onClick={() => openEditModal(property)}
                   >
-                    <Edit2 size={18} />
+                    <Edit2 size={18} className="text-black" />
+                  </button>
+                  <button
+                    className="absolute top-3 left-3 bg-gray-200 border rounded-md border-gray-300 hover:bg-gray-200 hover:scale-110 transition-all duration-300 p-1"
+                    onClick={() => navigate(`/property/${property._id}`)}
+                  >
+                    <SquareArrowOutUpRight size={18} className="text-black" />
                   </button>
                   <img
                     src={property.images[0]}
                     alt={property.title}
-                    className="w-full h-40 object-cover rounded-lg mb-4"
+                    className="w-full h-40 object-cover rounded-lg mb-4 mt-2 border border-gray-400"
                   />
                   <h3 className="text-lg font-semibold">{property.title}</h3>
                   <p className="text-sm text-gray-600">{property.location}</p>
@@ -99,8 +106,8 @@ const LandlordProfile = () => {
                         className="mt-3 w-full bg-blue-500 hover:bg-blue-600"
                         onClick={() => openApplicationModal(property)}
                       >
+                        <Expand className="mr-2" />
                         See Applications
-                        <SquareArrowOutUpRight className="mr-2" />
                       </Button>
                       <Button
                         className="mt-3 w-full bg-red-500 hover:bg-red-600"

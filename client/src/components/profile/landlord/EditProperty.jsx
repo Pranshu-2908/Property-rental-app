@@ -43,7 +43,7 @@ const EditProperty = ({
             <Label>Rent</Label>
             <Input
               name="rent"
-              value={editedProperty.rent || ""}
+              value={editedProperty.price || ""}
               onChange={handleEditChange}
             />
           </div>

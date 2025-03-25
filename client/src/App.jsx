@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Property from "./components/Property";
 import Profile from "./components/Profile";
 import AddProperty from "./components/AddProperty";
+import LandLordProp from "./components/LandLordProp";
 
 const appRouter = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/add-property",
     element: <AddProperty />,
+  },
+  {
+    path: "/property/:propertyId",
+    element: <LandLordProp />,
   },
 ]);
 

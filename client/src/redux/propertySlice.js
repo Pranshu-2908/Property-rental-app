@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const propertySlice = createSlice({
   name: "property",
   initialState: {
+    singleProp: null,
     newProp: null,
     allProps: [],
     rentedProps: [],
@@ -22,6 +23,9 @@ const propertySlice = createSlice({
     setNewProp: (state, action) => {
       state.newProp = action.payload;
     },
+    setSingleProp: (state, action) => {
+      state.singleProp = action.payload;
+    },
     removeProp: (state, action) => {
       state.allProps = state.allProps.filter(
         (prop) => prop._id !== action.payload
@@ -39,6 +43,7 @@ export const {
   setAllRentedProps,
   setAllOwnedProps,
   removeProp,
+  setSingleProp,
 } = propertySlice.actions;
 
 export default propertySlice.reducer;
